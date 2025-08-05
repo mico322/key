@@ -2,71 +2,76 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Mini Google Drive</title>
+  <title>Simple File Uploader</title>
   <style>
-    body { font-family: Arial, sans-serif; padding: 20px; background: #f4f4f4; }
-    h1 { text-align: center; }
-    .container { max-width: 600px; margin: auto; background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px #ccc; }
-    .file-list { list-style: none; padding: 0; }
-    .file-item { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; background: #eee; padding: 10px; border-radius: 4px; }
-    button { margin-left: 10px; }
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background-color: #f2f2f2;
+    }
+    h1 {
+      text-align: center;
+    }
+    .uploader {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+      max-width: 600px;
+      margin: auto;
+    }
+    li {
+      background: #fff;
+      margin: 5px 0;
+      padding: 10px 15px;
+      border-radius: 6px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    a {
+      text-decoration: none;
+      color: #007bff;
+    }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Mini Google Drive</h1>
+
+  <h1>Simple File Uploader</h1>
+
+  <div class="uploader">
     <input type="file" id="fileInput" multiple>
-    <ul class="file-list" id="fileList"></ul>
   </div>
 
+  <ul id="fileList"></ul>
+
   <script>
-    const fileInput = document.getElementById('fileInput');
-    const fileList = document.getElementById('fileList');
-    const filesMap = new Map();
+    const fileInput = document.getElementById("fileInput");
+    const fileList = document.getElementById("fileList");
 
-    fileInput.addEventListener('change', (event) => {
-      const files = Array.from(event.target.files);
+    fileInput.addEventListener("change", function () {
+      const files = Array.from(fileInput.files);
       files.forEach(file => {
-        const id = Date.now() + Math.random();
-        filesMap.set(id, file);
-        displayFile(file, id);
-      });
-      fileInput.value = '';
-    });
-
-    function displayFile(file, id) {
-      const li = document.createElement('li');
-      li.className = 'file-item';
-      li.innerHTML = `
-        <span>${file.name}</span>
-        <div>
-          <button onclick="downloadFile(${id})">Download</button>
-          <button onclick="deleteFile(${id}, this)">Delete</button>
-        </div>
-      `;
-      li.setAttribute('data-id', id);
-      fileList.appendChild(li);
-    }
-
-    function deleteFile(id, button) {
-      filesMap.delete(id);
-      const li = button.closest('li');
-      if (li) fileList.removeChild(li);
-    }
-
-    function downloadFile(id) {
-      const file = filesMap.get(id);
-      if (file) {
         const url = URL.createObjectURL(file);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = file.name;
-        document.body.appendChild(a);
-        a.click();
-        URL.revokeObjectURL(url);
-        document.body.removeChild(a);
-      }
-    }
+
+        const li = document.createElement("li");
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = file.name;
+        link.textContent = file.name;
+        link.target = "_blank";
+
+        li.appendChild(link);
+        fileList.appendChild(li);
+      });
+
+      // Clear input for next selection
+      fileInput.value = "";
+    });
   </script>
+
 </body>
 </html>
