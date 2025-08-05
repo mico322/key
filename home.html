@@ -2,30 +2,15 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Simple File Uploader</title>
+  <title> Mini Drive</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      padding: 20px;
-      background-color: #f2f2f2;
-    }
-    h1 {
-      text-align: center;
-    }
-    .uploader {
-      text-align: center;
-      margin-bottom: 20px;
-    }
-    ul {
-      list-style: none;
-      padding: 0;
-      max-width: 600px;
-      margin: auto;
-    }
+    body { font-family: Arial, sans-serif; background: #f9f9f9; padding: 30px; }
+    h1 { text-align: center; }
+    ul { list-style: none; padding: 0; max-width: 600px; margin: 30px auto; }
     li {
       background: #fff;
-      margin: 5px 0;
-      padding: 10px 15px;
+      margin: 10px 0;
+      padding: 15px;
       border-radius: 6px;
       box-shadow: 0 0 5px rgba(0,0,0,0.1);
       display: flex;
@@ -33,45 +18,24 @@
       align-items: center;
     }
     a {
-      text-decoration: none;
       color: #007bff;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    a:hover {
+      text-decoration: underline;
     }
   </style>
 </head>
 <body>
 
-  <h1>Simple File Uploader</h1>
+  <h1>📁  Mini Drive</h1>
 
-  <div class="uploader">
-    <input type="file" id="fileInput" multiple>
-  </div>
-
-  <ul id="fileList"></ul>
-
-  <script>
-    const fileInput = document.getElementById("fileInput");
-    const fileList = document.getElementById("fileList");
-
-    fileInput.addEventListener("change", function () {
-      const files = Array.from(fileInput.files);
-      files.forEach(file => {
-        const url = URL.createObjectURL(file);
-
-        const li = document.createElement("li");
-        const link = document.createElement("a");
-        link.href = url;
-        link.download = file.name;
-        link.textContent = file.name;
-        link.target = "_blank";
-
-        li.appendChild(link);
-        fileList.appendChild(li);
-      });
-
-      // Clear input for next selection
-      fileInput.value = "";
-    });
-  </script>
+  <ul>
+    <li><a href="test1.zip" download>Download file1.pdf</a></li>
+    <li><a href="test2.zip" download>Download file2.zip</a></li>
+    
+  </ul>
 
 </body>
 </html>
